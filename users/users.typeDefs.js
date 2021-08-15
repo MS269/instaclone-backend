@@ -11,6 +11,12 @@ export default gql`
     lastName: String
   }
 
+  type LoginResult {
+    ok: Boolean!
+    token: String
+    error: String
+  }
+
   type Query {
     seeProfile(username: String!): User
   }
@@ -23,5 +29,7 @@ export default gql`
       firstName: String!
       lastName: String
     ): User
+
+    login(username: String!, password: String!): LoginResult!
   }
 `;

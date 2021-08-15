@@ -6,7 +6,7 @@ Instaclone Backend - GraphQL Server (Apollo Server + Prisma)
 
 - [x] Create Account
 - [x] See Profile
-- [ ] Login
+- [x] Login
 - [ ] Edit Profile
 - [ ] Follow User
 - [ ] Unfollow User

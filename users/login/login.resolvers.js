@@ -13,7 +13,7 @@ export default {
       if (!passwordOk) {
         return { ok: false, error: "Incorrect password." };
       }
-      const token = await jwt.sign({ id: user.id }, process.env.SECRETE_KEY);
+      const token = await jwt.sign({ id: user.id }, process.env.SECRET_KEY);
       return { ok: true, token };
     },
   },

@@ -1,13 +1,23 @@
 import bcrypt from "bcrypt";
-import { Resolvers } from "../../types";
+import { GraphQLUpload } from "graphql-upload";
 import { protectedResolver } from "../users.utils";
 
-const resolvers: Resolvers = {
+const resolvers = {
+  Upload: GraphQLUpload,
+
   Mutation: {
     editProfile: protectedResolver(
       async (
         _,
-        { username, email, password: newPassword, firstName, lastName },
+        {
+          username,
+          email,
+          password: newPassword,
+          firstName,
+          lastName,
+          bio,
+          avatar,
+        },
         { client, loggedInUser }
       ) => {
         let hashedPassword = null;
@@ -22,6 +32,7 @@ const resolvers: Resolvers = {
             ...(hashedPassword && { password: hashedPassword }),
             firstName,
             lastName,
+            bio,
           },
         });
         if (updatedUser) {

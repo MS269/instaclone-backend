@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "nodemon --exec ts-node src/server --ext ts,js",
+    "start": "nodemon --exec babel-node src/server",
     "migrate": "npx prisma migrate dev",
     "studio": "npx prisma studio"
   },
@@ -23,16 +23,20 @@
     "@graphql-tools/merge": "^8.0.1",
     "@graphql-tools/schema": "^8.1.1",
     "@prisma/client": "^2.29.1",
-    "apollo-server": "^3.1.2",
+    "apollo-server-express": "^3.1.2",
     "bcrypt": "^5.0.1",
     "dotenv": "^10.0.0",
+    "express": "^4.17.1",
     "graphql": "^15.5.1",
+    "graphql-upload": "^12.0.0",
     "jsonwebtoken": "^8.5.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.15.0",
+    "@babel/node": "^7.14.9",
+    "@babel/preset-env": "^7.15.0",
+    "morgan": "^1.10.0",
     "nodemon": "^2.0.12",
-    "prisma": "^2.29.1",
-    "ts-node": "^10.2.0",
-    "typescript": "^4.3.5"
+    "prisma": "^2.29.1"
   }
 }

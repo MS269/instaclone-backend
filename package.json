@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "nodemon --exec ts-node src/server --ext ts.js",
+    "start": "nodemon --exec ts-node src/server --ext ts,js",
     "migrate": "npx prisma migrate dev",
     "studio": "npx prisma studio"
   },

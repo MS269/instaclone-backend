@@ -1,10 +1,12 @@
+import { User } from "@prisma/client";
+import { Context, Resolvers } from "../../types";
 import { protectedResolver } from "../users.utils";
 
-export default {
+const resolvers: Resolvers = {
   Mutation: {
     followUser: protectedResolver(
-      async (_, { username }, { client, loggedInUser }) => {
-        const ok = await client.user.findUnique({ where: { username } });
+      async (_, { username }: any, { client, loggedInUser }: Context) => {
+        const ok: User = await client.user.findUnique({ where: { username } });
         if (!ok) {
           return { ok: false, error: "That user does not exist." };
         }
@@ -17,3 +19,5 @@ export default {
     ),
   },
 };
+
+export default resolvers;

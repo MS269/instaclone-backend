@@ -11,6 +11,6 @@ Instaclone Backend - GraphQL Server (Express + Apollo Server + Prisma)
 - [x] Change Avatar (Image Upload)
 - [x] Follow User
 - [x] Unfollow User
-- [ ] See Followers
-- [ ] See Following
+- [ ] See Following w/ Pagination
+- [ ] Computed Fields
 - [ ] Search Users

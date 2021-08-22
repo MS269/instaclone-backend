@@ -18,4 +18,6 @@ model User {
   lastName  String?
   bio       String?
   avatar    String?
+  followers User[]   @relation("FollowRelation", references: [id])
+  following User[]   @relation("FollowRelation", references: [id])
 }

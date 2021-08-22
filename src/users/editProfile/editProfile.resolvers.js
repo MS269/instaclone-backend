@@ -5,7 +5,7 @@ import { protectedResolver } from "../users.utils";
 
 const PORT = process.env.PORT;
 
-const resolvers = {
+export default {
   Upload: GraphQLUpload,
 
   Mutation: {
@@ -59,5 +59,3 @@ const resolvers = {
     ),
   },
 };
-
-export default resolvers;

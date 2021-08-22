@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 
-const resolvers = {
+export default {
   Mutation: {
     createAccount: async (
       _,
@@ -24,11 +24,9 @@ const resolvers = {
         },
       });
       if (!newUser) {
-        return { ok: false, error: "New User not found." };
+        return { ok: false, error: "Can't create account." };
       }
       return { ok: true };
     },
   },
 };
-
-export default resolvers;

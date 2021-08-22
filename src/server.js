@@ -9,7 +9,7 @@ import { getUser } from "./users/users.utils";
 
 const PORT = process.env.PORT;
 
-async function startServer() {
+const startServer = async () => {
   const server = new ApolloServer({
     schema,
     context: async ({ req }) => {
@@ -31,6 +31,6 @@ async function startServer() {
   console.log(
     `🚀 Server ready at http://localhost:${PORT}${server.graphqlPath}`
   );
-}
+};
 
 startServer();

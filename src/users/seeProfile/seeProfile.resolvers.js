@@ -1,11 +1,9 @@
 import { protectedResolver } from "../users.utils";
 
-const resolvers = {
+export default {
   Query: {
     seeProfile: protectedResolver((_, { username }, { client }) =>
       client.user.findUnique({ where: { username } })
     ),
   },
 };
-
-export default resolvers;

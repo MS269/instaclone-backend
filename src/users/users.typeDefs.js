@@ -11,5 +11,7 @@ export default gql`
     lastName: String
     bio: String
     avatar: String
+    followers: [User]
+    following: [User]
   }
 `;

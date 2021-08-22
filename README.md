@@ -10,7 +10,7 @@ Instaclone Backend - GraphQL Server (Express + Apollo Server + Prisma)
 - [x] Edit Profile
 - [x] Change Avatar (Image Upload)
 - [x] Follow User
-- [ ] Unfollow User
-- [ ] Search Users
+- [x] Unfollow User
 - [ ] See Followers
 - [ ] See Following
+- [ ] Search Users

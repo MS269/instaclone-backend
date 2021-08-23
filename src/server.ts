@@ -8,10 +8,10 @@ import client from "./client";
 import schema from "./schema";
 import { getUser } from "./users/users.utils";
 
-const PORT: string = process.env.PORT;
+const PORT = process.env.PORT;
 
 const startServer = async () => {
-  const server: ApolloServer = new ApolloServer({
+  const server = new ApolloServer({
     schema,
     context: async ({ req }) => {
       return {
@@ -22,7 +22,7 @@ const startServer = async () => {
   });
   await server.start();
 
-  const app: any = express();
+  const app = express();
   app.use(graphqlUploadExpress());
   app.use(logger("dev"));
   server.applyMiddleware({ app });

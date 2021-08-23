@@ -1,16 +1,15 @@
-import { User } from ".prisma/client";
 import jwt from "jsonwebtoken";
 import client from "../client";
-import { Context, Resolver } from "../types";
+import { Resolver } from "../types";
 
-export const getUser = async (token: any) => {
+export const getUser = async (token) => {
   try {
     if (!token) {
       return null;
     }
     const verifiedToken: any = await jwt.verify(token, process.env.SECRET_KEY);
     if ("id" in verifiedToken) {
-      const user: User = await client.user.findUnique({
+      const user = await client.user.findUnique({
         where: { id: verifiedToken.id },
       });
       if (user) {
@@ -25,8 +24,7 @@ export const getUser = async (token: any) => {
 };
 
 export const protectedResolver =
-  (ourResolver: Resolver) =>
-  (root: any, args: any, context: Context, info: any) => {
+  (ourResolver: Resolver) => (root, args, context, info) => {
     if (!context.loggedInUser) {
       return {
         ok: false,

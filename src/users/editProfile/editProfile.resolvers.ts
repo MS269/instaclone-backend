@@ -1,10 +1,9 @@
-import { User } from "@prisma/client";
 import bcrypt from "bcrypt";
 import { createWriteStream } from "fs";
-import { Context, Resolvers } from "../../types";
+import { Resolvers } from "../../types";
 import { protectedResolver } from "../users.utils";
 
-const PORT: string = process.env.PORT;
+const PORT = process.env.PORT;
 
 const resolvers: Resolvers = {
   Mutation: {
@@ -19,27 +18,25 @@ const resolvers: Resolvers = {
           lastName,
           bio,
           avatar,
-        }: any,
-        { client, loggedInUser }: Context
+        },
+        { client, loggedInUser }
       ) => {
-        let hashedPassword: string = null;
+        let hashedPassword = null;
         if (newPassword) {
           hashedPassword = await bcrypt.hash(newPassword, 10);
         }
-        let avatarUrl: string = null;
+        let avatarUrl = null;
         if (avatar) {
-          const { filename, createReadStream }: any = await avatar;
-          const newFilename: string = `${
-            loggedInUser.id
-          }-${Date.now()}-${filename}`;
-          const readStream: any = createReadStream();
-          const writeStream: any = createWriteStream(
+          const { filename, createReadStream } = await avatar;
+          const newFilename = `${loggedInUser.id}-${Date.now()}-${filename}`;
+          const readStream = createReadStream();
+          const writeStream = createWriteStream(
             process.cwd() + "/uploads/" + newFilename
           );
           readStream.pipe(writeStream);
           avatarUrl = `http://localhost:${PORT}/static/${newFilename}`;
         }
-        const updatedUser: User = await client.user.update({
+        const updatedUser = await client.user.update({
           where: { id: loggedInUser.id },
           data: {
             username,

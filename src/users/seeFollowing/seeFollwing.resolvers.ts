@@ -1,7 +1,5 @@
 import { Resolvers } from "../../types";
 
-const TAKE = 5;
-
 const resolvers: Resolvers = {
   Query: {
     seeFollowing: async (_, { username, lastId }, { client }) => {
@@ -15,7 +13,7 @@ const resolvers: Resolvers = {
       const following = await client.user
         .findUnique({ where: { username } })
         .following({
-          take: TAKE,
+          take: 5,
           skip: lastId ? 1 : 0,
           ...(lastId && { cursor: { id: lastId } }),
         });

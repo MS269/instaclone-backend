@@ -13,5 +13,5 @@ Instaclone Backend - GraphQL Server (Express + Apollo Server + Prisma)
 - [x] Unfollow User
 - [x] See Followers w/ Offset Based Pagination
 - [x] See Following w/ Cursor Based Pagination
-- [ ] Computed Fields
+- [x] Computed Fields
 - [ ] Search Users

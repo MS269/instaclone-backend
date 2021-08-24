@@ -1,9 +1,10 @@
 import bcrypt from "bcrypt";
 import { createWriteStream } from "fs";
-import { Resolvers } from "../../types";
+import { Context, Resolvers } from "../../types";
 import { protectedResolver } from "../users.utils";
+import { EditProfileArgs, EditProfileResult } from "./editProfile";
 
-const PORT = process.env.PORT;
+const PORT: string | number = process.env.PORT || 4000;
 
 const resolvers: Resolvers = {
   Mutation: {
@@ -18,16 +19,16 @@ const resolvers: Resolvers = {
           lastName,
           bio,
           avatar,
-        },
-        { client, loggedInUser }
-      ) => {
-        let hashedPassword = null;
+        }: EditProfileArgs,
+        { client, loggedInUser }: Context
+      ): Promise<EditProfileResult> => {
+        let hashedPassword: string = null;
         if (newPassword) {
           hashedPassword = await bcrypt.hash(newPassword, 10);
         }
-        let avatarUrl = null;
+        let avatarUrl: string = null;
         if (avatar) {
-          const { filename, createReadStream } = await avatar;
+          const { filename, createReadStream } = avatar;
           const newFilename = `${loggedInUser.id}-${Date.now()}-${filename}`;
           const readStream = createReadStream();
           const writeStream = createWriteStream(

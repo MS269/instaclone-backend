@@ -1,11 +1,16 @@
-import { Resolvers } from "../../types";
+import { Context, Resolvers } from "../../types";
 import { protectedResolver } from "../users.utils";
+import { FollowUserArgs, FollowUserResult } from "./followUser";
 
 const resolvers: Resolvers = {
   Mutation: {
     followUser: protectedResolver(
-      async (_, { username }, { client, loggedInUser }) => {
-        const ok = await client.user.findUnique({
+      async (
+        _,
+        { username }: FollowUserArgs,
+        { client, loggedInUser }: Context
+      ): Promise<FollowUserResult> => {
+        const ok = await client.user.findFirst({
           where: { username },
           select: { id: true },
         });

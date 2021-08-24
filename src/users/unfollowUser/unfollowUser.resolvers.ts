@@ -1,10 +1,15 @@
-import { Resolvers } from "../../types";
+import { Context, Resolvers } from "../../types";
 import { protectedResolver } from "../users.utils";
+import { UnfollowUserArgs, UnfollowUserResult } from "./unFollowUser";
 
 const resolvers: Resolvers = {
   Mutation: {
     unfollowUser: protectedResolver(
-      async (_, { username }, { client, loggedInUser }) => {
+      async (
+        _,
+        { username }: UnfollowUserArgs,
+        { client, loggedInUser }: Context
+      ): Promise<UnfollowUserResult> => {
         const ok = await client.user.findUnique({
           where: { username },
           select: { id: true },

@@ -1,20 +1,22 @@
 import bcrypt from "bcrypt";
-import { Resolvers } from "../../types";
+import { Context, Resolvers } from "../../types";
+import { CreateAccountArgs, CreateAccountResult } from "./createAccount";
 
 const resolvers: Resolvers = {
   Mutation: {
     createAccount: async (
       _,
-      { username, email, password, firstName, lastName },
-      { client }
-    ) => {
+      { username, email, password, firstName, lastName }: CreateAccountArgs,
+      { client }: Context
+    ): Promise<CreateAccountResult> => {
       const existingUser = await client.user.findFirst({
         where: { OR: [{ username }, { email }] },
+        select: { id: true },
       });
       if (existingUser) {
         return { ok: false, error: "This username/email is already taken." };
       }
-      const hashedPassword = await bcrypt.hash(password, 10);
+      const hashedPassword: string = await bcrypt.hash(password, 10);
       const newUser = await client.user.create({
         data: {
           username,

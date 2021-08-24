@@ -1,4 +1,6 @@
-require("dotenv").config();
+import dotenv from "dotenv";
+dotenv.config();
+
 import { ApolloServer } from "apollo-server-express";
 import express from "express";
 import { graphqlUploadExpress } from "graphql-upload";
@@ -8,7 +10,7 @@ import client from "./client";
 import schema from "./schema";
 import { getUser } from "./users/users.utils";
 
-const PORT = process.env.PORT;
+const PORT: string | number = process.env.PORT || 4000;
 
 const startServer = async () => {
   const server = new ApolloServer({
@@ -23,10 +25,10 @@ const startServer = async () => {
   await server.start();
 
   const app = express();
-  app.use(graphqlUploadExpress());
   app.use(logger("dev"));
-  server.applyMiddleware({ app });
+  app.use(graphqlUploadExpress());
   app.use("/static", express.static("uploads"));
+  server.applyMiddleware({ app });
 
   http.createServer(app).listen(PORT);
   console.log(

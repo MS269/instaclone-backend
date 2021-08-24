@@ -1,9 +1,14 @@
-import { Resolvers } from "../../types";
+import { Context, Resolvers } from "../../types";
+import { SeeFollowingArgs, SeeFollowingResult } from "./seeFollowing";
 
 const resolvers: Resolvers = {
   Query: {
-    seeFollowing: async (_, { username, lastId }, { client }) => {
-      const ok = await client.user.findUnique({
+    seeFollowing: async (
+      _,
+      { username, lastId }: SeeFollowingArgs,
+      { client }: Context
+    ): Promise<SeeFollowingResult> => {
+      const ok = await client.user.findFirst({
         where: { username },
         select: { id: true },
       });

@@ -1,30 +1,38 @@
+import { User } from "@prisma/client";
 import jwt from "jsonwebtoken";
 import client from "../client";
-import { Resolver } from "../types";
+import { Context, Resolver } from "../types";
+import { ProtectedResolverResponse } from "./users";
 
-export const getUser = async (token) => {
+export const getUser = async (token: any): Promise<User | undefined> => {
   try {
     if (!token) {
-      return null;
+      return undefined;
     }
-    const verifiedToken: any = await jwt.verify(token, process.env.SECRET_KEY);
+    const verifiedToken: any = jwt.verify(token, process.env.SECRET_KEY || "");
     if ("id" in verifiedToken) {
-      const user = await client.user.findUnique({
+      const user: User = await client.user.findUnique({
         where: { id: verifiedToken.id },
       });
       if (user) {
         return user;
       }
     } else {
-      return null;
+      return undefined;
     }
   } catch {
-    return null;
+    return undefined;
   }
 };
 
 export const protectedResolver =
-  (ourResolver: Resolver) => (root, args, context, info) => {
+  (ourResolver: Resolver) =>
+  (
+    root: any,
+    args: any,
+    context: Context,
+    info: any
+  ): Resolver | ProtectedResolverResponse => {
     if (!context.loggedInUser) {
       return {
         ok: false,

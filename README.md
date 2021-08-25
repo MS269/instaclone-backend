@@ -2,7 +2,7 @@
 
 Instaclone Backend - GraphQL Server (Express + Apollo Server + Prisma)
 
-## User:
+## User
 
 - [x] Create Account
 - [x] See Profile
@@ -15,3 +15,16 @@ Instaclone Backend - GraphQL Server (Express + Apollo Server + Prisma)
 - [x] See Following w/ Cursor Based Pagination
 - [x] Computed Fields
 - [x] Search Users
+
+## Photos
+
+- [x] Upload Photo (Parse #)
+- [ ] See Photo
+- [ ] See Hashtag
+- [ ] Search Photos
+- [ ] Edit Photo
+- [ ] Like / Unlike Photo
+- [ ] See Photo Likes
+- [ ] See Feed
+- [ ] See Photo Comments
+- [ ] Delete Photo

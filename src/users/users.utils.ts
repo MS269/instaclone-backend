@@ -11,7 +11,7 @@ export const getUser = async (token: any): Promise<User | undefined> => {
     }
     const verifiedToken: any = jwt.verify(token, process.env.SECRET_KEY || "");
     if ("id" in verifiedToken) {
-      const user: User = await client.user.findUnique({
+      const user: User | null = await client.user.findUnique({
         where: { id: verifiedToken.id },
       });
       if (user) {

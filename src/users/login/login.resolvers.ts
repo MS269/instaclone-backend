@@ -21,7 +21,10 @@ const resolvers: Resolvers = {
       if (!passwordOk) {
         return { ok: false, error: "Incorrect password." };
       }
-      const token: string = jwt.sign({ id: user.id }, process.env.SECRET_KEY);
+      const token: string = jwt.sign(
+        { id: user.id },
+        process.env.SECRET_KEY || ""
+      );
       return { ok: true, token };
     },
   },

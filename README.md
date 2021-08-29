@@ -19,7 +19,7 @@ Instaclone Backend - GraphQL Server (Express + Apollo Server + Prisma)
 ## Photos
 
 - [x] Upload Photo (Parse #)
-- [ ] See Photo
+- [x] See Photo
 - [ ] See Hashtag
 - [ ] Search Photos
 - [ ] Edit Photo

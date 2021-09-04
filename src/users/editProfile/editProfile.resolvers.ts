@@ -49,7 +49,7 @@ const resolvers: Resolvers = {
             ...(avatarUrl && { avatar: avatarUrl }),
           },
         });
-        if (updatedUser) {
+        if (updatedUser.id) {
           return { ok: true };
         } else {
           return { ok: false, error: "Could not update profile." };

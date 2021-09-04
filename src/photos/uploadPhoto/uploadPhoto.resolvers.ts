@@ -1,6 +1,7 @@
 import { Photo } from "@prisma/client";
 import { Context, Resolvers } from "../../types";
 import { protectedResolver } from "../../users/users.utils";
+import { parseHashtags } from "../photos.utils";
 import { UploadPhotoArgs } from "./uploadPhoto";
 
 const resolvers: Resolvers = {
@@ -11,22 +12,18 @@ const resolvers: Resolvers = {
         { file, caption }: UploadPhotoArgs,
         { client, loggedInUser }: Context
       ): Promise<Photo> => {
-        let hashtagObjs = null;
+        let hashtagObjs = [];
         if (caption) {
-          const hashtags = caption.match(/#[ㄱ-ㅎ|ㅏ-ㅣ|가-힣|\w]+/g);
-          if (hashtags) {
-            hashtagObjs = hashtags.map((hashtag) => ({
-              where: { hashtag },
-              create: { hashtag },
-            }));
-          }
+          hashtagObjs = parseHashtags(caption);
         }
         return client.photo.create({
           data: {
             user: { connect: { id: loggedInUser.id } },
             file,
             caption,
-            ...(hashtagObjs && { hashtags: { connectOrCreate: hashtagObjs } }),
+            ...(hashtagObjs.length > 0 && {
+              hashtags: { connectOrCreate: hashtagObjs },
+            }),
           },
         });
       }

@@ -1,8 +1,20 @@
-import { PrismaPromise, User } from "@prisma/client";
+import { Photo, PrismaPromise, User } from "@prisma/client";
 import { Context, Resolvers } from "../types";
+import { UserPhotosArgs } from "./users";
+
+const TAKE = 5;
 
 const resolvers: Resolvers = {
   User: {
+    photos: (
+      { id }: User,
+      { page }: UserPhotosArgs,
+      { client }: Context
+    ): PrismaPromise<Photo[]> =>
+      client.user
+        .findUnique({ where: { id } })
+        .photos({ take: TAKE, skip: (page - 1) * TAKE }),
+
     totalFollowers: (
       { id }: User,
       _,

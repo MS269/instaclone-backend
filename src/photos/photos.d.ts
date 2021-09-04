@@ -1,3 +1,3 @@
-export interface PhotosArgs {
+export interface HashtagPhotosArgs {
   page: number;
 }

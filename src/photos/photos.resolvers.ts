@@ -1,5 +1,8 @@
 import { Hashtag, Photo, Prisma, PrismaPromise, User } from "@prisma/client";
 import { Context, Resolvers } from "../types";
+import { PhotosArgs } from "./photos";
+
+const TAKE = 5;
 
 const resolvers: Resolvers = {
   Photo: {
@@ -16,6 +19,24 @@ const resolvers: Resolvers = {
       { client }: Context
     ): PrismaPromise<Hashtag[]> =>
       client.hashtag.findMany({ where: { photos: { some: { id } } } }),
+  },
+
+  Hashtag: {
+    photos: (
+      { id }: Hashtag,
+      { page }: PhotosArgs,
+      { client }: Context
+    ): PrismaPromise<Photo[]> =>
+      client.hashtag
+        .findUnique({ where: { id } })
+        .photos({ take: TAKE, skip: (page - 1) * TAKE }),
+
+    totalPhotos: (
+      { id }: Hashtag,
+      _,
+      { client }: Context
+    ): PrismaPromise<number> =>
+      client.photo.count({ where: { hashtags: { some: { id } } } }),
   },
 };
 

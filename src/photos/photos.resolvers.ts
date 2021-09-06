@@ -19,6 +19,9 @@ const resolvers: Resolvers = {
       { client }: Context
     ): PrismaPromise<Hashtag[]> =>
       client.hashtag.findMany({ where: { photos: { some: { id } } } }),
+
+    likes: ({ id }: Photo, _, { client }: Context): PrismaPromise<number> =>
+      client.like.count({ where: { photoId: id } }),
   },
 
   Hashtag: {

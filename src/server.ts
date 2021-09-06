@@ -17,8 +17,8 @@ const startServer = async () => {
     schema,
     context: async ({ req }) => {
       return {
-        loggedInUser: await getUser(req.headers.token),
         client,
+        loggedInUser: await getUser(req.headers.token),
       };
     },
   });

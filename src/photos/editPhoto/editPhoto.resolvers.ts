@@ -9,7 +9,7 @@ const resolvers: Resolvers = {
       async (
         _,
         { id, caption }: EditPhotoArgs,
-        { loggedInUser, client }: Context
+        { client, loggedInUser }: Context
       ): Promise<EditPhotoResult> => {
         const oldPhoto = await client.photo.findFirst({
           where: { id, userId: loggedInUser.id },

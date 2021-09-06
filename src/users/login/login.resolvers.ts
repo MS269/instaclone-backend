@@ -17,14 +17,11 @@ const resolvers: Resolvers = {
       if (!user) {
         return { ok: false, error: "User not found." };
       }
-      const passwordOk: boolean = await bcrypt.compare(password, user.password);
+      const passwordOk = await bcrypt.compare(password, user.password);
       if (!passwordOk) {
         return { ok: false, error: "Incorrect password." };
       }
-      const token: string = jwt.sign(
-        { id: user.id },
-        process.env.SECRET_KEY || ""
-      );
+      const token = jwt.sign({ id: user.id }, process.env.SECRET_KEY || "");
       return { ok: true, token };
     },
   },

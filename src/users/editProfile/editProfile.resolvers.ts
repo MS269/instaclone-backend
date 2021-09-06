@@ -22,11 +22,11 @@ const resolvers: Resolvers = {
         }: EditProfileArgs,
         { client, loggedInUser }: Context
       ): Promise<EditProfileResult> => {
-        let hashedPassword: string | null = null;
+        let hashedPassword = null;
         if (newPassword) {
           hashedPassword = await bcrypt.hash(newPassword, 10);
         }
-        let avatarUrl: string | null = null;
+        let avatarUrl = null;
         if (avatar) {
           const { filename, createReadStream } = avatar;
           const newFilename = `${loggedInUser.id}-${Date.now()}-${filename}`;

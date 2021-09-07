@@ -24,7 +24,7 @@ Instaclone Backend - GraphQL Server (Express + Apollo Server + Prisma)
 - [x] Search Photos
 - [x] Edit Photo
 - [x] Like / Unlike Photo
-- [ ] See Photo Likes
+- [x] See Photo Likes
 - [ ] See Feed
 - [ ] See Photo Comments
 - [ ] Delete Photo

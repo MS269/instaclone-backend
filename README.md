@@ -28,3 +28,17 @@ Instaclone Backend - GraphQL Server (Express + Apollo Server + Prisma)
 - [x] See Feed
 - [ ] See Photo Comments
 - [ ] Delete Photo
+
+## Comments
+
+- [x] Comment on Photo
+- [ ] Delete Comment
+- [ ] Edit Comment
+
+## Refactor
+
+- [ ] Mutation Responses
+
+## Extras
+
+- [ ] S3 Image Upload

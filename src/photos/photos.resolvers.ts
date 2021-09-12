@@ -22,6 +22,9 @@ const resolvers: Resolvers = {
 
     likes: ({ id }: Photo, _, { client }: Context): PrismaPromise<number> =>
       client.like.count({ where: { photoId: id } }),
+
+    comments: ({ id }: Photo, _, { client }: Context): PrismaPromise<number> =>
+      client.comment.count({ where: { photoId: id } }),
   },
 
   Hashtag: {

@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { Context, Resolvers } from "../../types";
-import { LoginArgs, LoginResult } from "./login";
+import { LoginArgs, LoginResponse } from "./login";
 
 const resolvers: Resolvers = {
   Mutation: {
@@ -9,7 +9,7 @@ const resolvers: Resolvers = {
       _,
       { username, password }: LoginArgs,
       { client }: Context
-    ): Promise<LoginResult> => {
+    ): Promise<LoginResponse> => {
       const user = await client.user.findFirst({
         where: { username },
         select: { id: true, password: true },

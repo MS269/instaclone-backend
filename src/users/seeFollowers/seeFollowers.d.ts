@@ -5,7 +5,7 @@ export interface SeeFollowersArgs {
   page: number;
 }
 
-export interface SeeFollowersResult {
+export interface SeeFollowersResponse {
   ok: boolean;
   error?: string;
   followers?: User[];

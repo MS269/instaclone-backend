@@ -1,6 +1,6 @@
-import { Context, Resolvers } from "../../types";
+import { Context, MutationResponse, Resolvers } from "../../types";
 import { protectedResolver } from "../users.utils";
-import { UnfollowUserArgs, UnfollowUserResult } from "./unFollowUser";
+import { UnfollowUserArgs } from "./unFollowUser";
 
 const resolvers: Resolvers = {
   Mutation: {
@@ -9,7 +9,7 @@ const resolvers: Resolvers = {
         _,
         { username }: UnfollowUserArgs,
         { client, loggedInUser }: Context
-      ): Promise<UnfollowUserResult> => {
+      ): Promise<MutationResponse> => {
         const ok = await client.user.findUnique({
           where: { username },
           select: { id: true },

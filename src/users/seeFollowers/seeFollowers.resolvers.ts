@@ -1,5 +1,5 @@
 import { Context, Resolvers } from "../../types";
-import { SeeFollowersArgs, SeeFollowersResult } from "./seeFollowers";
+import { SeeFollowersArgs, SeeFollowersResponse } from "./seeFollowers";
 
 const TAKE = 5;
 
@@ -9,7 +9,7 @@ const resolvers: Resolvers = {
       _,
       { username, page }: SeeFollowersArgs,
       { client }: Context
-    ): Promise<SeeFollowersResult> => {
+    ): Promise<SeeFollowersResponse> => {
       const ok = await client.user.findFirst({
         where: { username },
         select: { id: true },
@@ -17,9 +17,7 @@ const resolvers: Resolvers = {
       if (!ok) {
         return { ok: false, error: "User not found." };
       }
-      if (page < 1) {
-        page = 1;
-      }
+      page = page < 1 ? 1 : page;
       const followers = await client.user
         .findUnique({ where: { username } })
         .followers({ take: TAKE, skip: (page - 1) * TAKE });

@@ -10,10 +10,12 @@ const resolvers: Resolvers = {
       { id }: User,
       { page }: UserPhotosArgs,
       { client }: Context
-    ): PrismaPromise<Photo[]> =>
-      client.user
+    ): PrismaPromise<Photo[]> => {
+      page = page < 1 ? 1 : page;
+      return client.user
         .findUnique({ where: { id } })
-        .photos({ take: TAKE, skip: (page - 1) * TAKE }),
+        .photos({ take: TAKE, skip: (page - 1) * TAKE });
+    },
 
     totalFollowers: (
       { id }: User,

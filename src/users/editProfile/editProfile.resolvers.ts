@@ -1,8 +1,8 @@
 import bcrypt from "bcrypt";
 import { createWriteStream } from "fs";
-import { Context, Resolvers } from "../../types";
+import { Context, MutationResponse, Resolvers } from "../../types";
 import { protectedResolver } from "../users.utils";
-import { EditProfileArgs, EditProfileResult } from "./editProfile";
+import { EditProfileArgs } from "./editProfile";
 
 const PORT: string | number = process.env.PORT || 4000;
 
@@ -21,7 +21,7 @@ const resolvers: Resolvers = {
           avatar,
         }: EditProfileArgs,
         { client, loggedInUser }: Context
-      ): Promise<EditProfileResult> => {
+      ): Promise<MutationResponse> => {
         let hashedPassword = null;
         if (newPassword) {
           hashedPassword = await bcrypt.hash(newPassword, 10);

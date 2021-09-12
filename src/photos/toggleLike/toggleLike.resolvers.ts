@@ -1,6 +1,6 @@
-import { Context, Resolvers } from "../../types";
+import { Context, MutationResponse, Resolvers } from "../../types";
 import { protectedResolver } from "../../users/users.utils";
-import { ToggleLikeArgs, ToggleLikeResult } from "./toggleLike";
+import { ToggleLikeArgs } from "./toggleLike";
 
 const resolvers: Resolvers = {
   Mutation: {
@@ -9,7 +9,7 @@ const resolvers: Resolvers = {
         _,
         { id }: ToggleLikeArgs,
         { client, loggedInUser }: Context
-      ): Promise<ToggleLikeResult> => {
+      ): Promise<MutationResponse> => {
         const photo = await client.photo.findUnique({ where: { id } });
         if (!photo) {
           return { ok: false, error: "Photo not found." };

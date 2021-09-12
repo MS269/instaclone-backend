@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
-import { Context, Resolvers } from "../../types";
-import { CreateAccountArgs, CreateAccountResult } from "./createAccount";
+import { Context, MutationResponse, Resolvers } from "../../types";
+import { CreateAccountArgs } from "./createAccount";
 
 const resolvers: Resolvers = {
   Mutation: {
@@ -8,7 +8,7 @@ const resolvers: Resolvers = {
       _,
       { username, email, password, firstName, lastName }: CreateAccountArgs,
       { client }: Context
-    ): Promise<CreateAccountResult> => {
+    ): Promise<MutationResponse> => {
       const existingUser = await client.user.findFirst({
         where: { OR: [{ username }, { email }] },
         select: { id: true },

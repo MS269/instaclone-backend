@@ -14,3 +14,8 @@ export interface Resolvers {
     [key: string]: Resolver;
   };
 }
+
+export interface MutationResponse {
+  ok: boolean;
+  error?: string;
+}

@@ -7,8 +7,3 @@ export interface EditProfileArgs {
   bio?: string;
   avatar?: any;
 }
-
-export interface EditProfileResult {
-  ok: boolean;
-  error?: string;
-}

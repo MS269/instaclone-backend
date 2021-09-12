@@ -5,8 +5,3 @@ export interface CreateAccountArgs {
   firstName: string;
   lastName?: string;
 }
-
-export interface CreateAccountResult {
-  ok: boolean;
-  error?: string;
-}

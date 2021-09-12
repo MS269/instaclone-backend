@@ -1,6 +1,6 @@
-import { Context, Resolvers } from "../../types";
+import { Context, MutationResponse, Resolvers } from "../../types";
 import { protectedResolver } from "../users.utils";
-import { FollowUserArgs, FollowUserResult } from "./followUser";
+import { FollowUserArgs } from "./followUser";
 
 const resolvers: Resolvers = {
   Mutation: {
@@ -9,7 +9,7 @@ const resolvers: Resolvers = {
         _,
         { username }: FollowUserArgs,
         { client, loggedInUser }: Context
-      ): Promise<FollowUserResult> => {
+      ): Promise<MutationResponse> => {
         const ok = await client.user.findFirst({
           where: { username },
           select: { id: true },

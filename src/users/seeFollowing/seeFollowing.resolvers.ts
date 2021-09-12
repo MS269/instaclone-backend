@@ -1,5 +1,5 @@
 import { Context, Resolvers } from "../../types";
-import { SeeFollowingArgs, SeeFollowingResult } from "./seeFollowing";
+import { SeeFollowingArgs, SeeFollowingResponse } from "./seeFollowing";
 
 const resolvers: Resolvers = {
   Query: {
@@ -7,7 +7,7 @@ const resolvers: Resolvers = {
       _,
       { username, lastId }: SeeFollowingArgs,
       { client }: Context
-    ): Promise<SeeFollowingResult> => {
+    ): Promise<SeeFollowingResponse> => {
       const ok = await client.user.findFirst({
         where: { username },
         select: { id: true },

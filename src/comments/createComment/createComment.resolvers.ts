@@ -1,6 +1,6 @@
-import { Context, Resolvers } from "../../types";
+import { Context, MutationResponse, Resolvers } from "../../types";
 import { protectedResolver } from "../../users/users.utils";
-import { CreateCommentArgs, CreateCommentResult } from "./createComment";
+import { CreateCommentArgs } from "./createComment";
 
 const resolvers: Resolvers = {
   Mutation: {
@@ -9,7 +9,7 @@ const resolvers: Resolvers = {
         _,
         { photoId, payload }: CreateCommentArgs,
         { client, loggedInUser }: Context
-      ): Promise<CreateCommentResult> => {
+      ): Promise<MutationResponse> => {
         const ok = await client.photo.findUnique({
           where: { id: photoId },
           select: { id: true },

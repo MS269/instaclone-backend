@@ -5,7 +5,7 @@ export interface SeeFollowingArgs {
   lastId: number;
 }
 
-export interface SeeFollowingResult {
+export interface SeeFollowingResponse {
   ok: boolean;
   error?: string;
   following?: User[];

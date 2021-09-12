@@ -1,7 +1,7 @@
-import { Context, Resolvers } from "../../types";
+import { Context, MutationResponse, Resolvers } from "../../types";
 import { protectedResolver } from "../../users/users.utils";
 import { parseHashtags } from "../photos.utils";
-import { EditPhotoArgs, EditPhotoResult } from "./editPhoto";
+import { EditPhotoArgs } from "./editPhoto";
 
 const resolvers: Resolvers = {
   Mutation: {
@@ -10,7 +10,7 @@ const resolvers: Resolvers = {
         _,
         { id, caption }: EditPhotoArgs,
         { client, loggedInUser }: Context
-      ): Promise<EditPhotoResult> => {
+      ): Promise<MutationResponse> => {
         const oldPhoto = await client.photo.findFirst({
           where: { id, userId: loggedInUser.id },
           include: { hashtags: { select: { hashtag: true } } },

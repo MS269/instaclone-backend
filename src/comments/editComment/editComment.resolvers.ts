@@ -1,13 +1,13 @@
 import { Context, MutationResponse, Resolvers } from "../../types";
 import { protectedResolver } from "../../users/users.utils";
-import { DeleteCommentArgs } from "./deleteComment";
+import { EditCommentArgs } from "./editComment";
 
 const resolvers: Resolvers = {
   Mutation: {
-    deleteComment: protectedResolver(
+    editComment: protectedResolver(
       async (
         _,
-        { id }: DeleteCommentArgs,
+        { id, payload }: EditCommentArgs,
         { client, loggedInUser }: Context
       ): Promise<MutationResponse> => {
         const comment = await client.comment.findUnique({
@@ -19,7 +19,7 @@ const resolvers: Resolvers = {
         } else if (comment.userId !== loggedInUser.id) {
           return { ok: false, error: "Not authorized." };
         }
-        await client.comment.delete({ where: { id } });
+        await client.comment.update({ where: { id }, data: { payload } });
         return { ok: true };
       }
     ),

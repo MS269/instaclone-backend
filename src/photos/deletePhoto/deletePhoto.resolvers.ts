@@ -1,6 +1,6 @@
-import { Context, Resolvers } from "../../types";
+import { Context, MutationResponse, Resolvers } from "../../types";
 import { protectedResolver } from "../../users/users.utils";
-import { DeletePhotoArgs, DeletePhotoResult } from "./deletePhoto";
+import { DeletePhotoArgs } from "./deletePhoto";
 
 const resolvers: Resolvers = {
   Mutation: {
@@ -9,7 +9,7 @@ const resolvers: Resolvers = {
         _,
         { id }: DeletePhotoArgs,
         { client, loggedInUser }: Context
-      ): Promise<DeletePhotoResult> => {
+      ): Promise<MutationResponse> => {
         const photo = await client.photo.findUnique({
           where: { id },
           select: { userId: true },

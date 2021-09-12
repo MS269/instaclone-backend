@@ -1,4 +1,4 @@
-export interface LoginResult {
+export interface LoginResponse {
   ok: boolean;
   token?: string;
   error?: string;

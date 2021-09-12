@@ -1,7 +1,7 @@
-import { gql } from "apollo-server-express";
+import { gql } from "apollo-server-core";
 
 export default gql`
-  type SeeFollowersResult {
+  type SeeFollowersResponse {
     ok: Boolean!
     error: String
     followers: [User]
@@ -9,6 +9,6 @@ export default gql`
   }
 
   type Query {
-    seeFollowers(username: String!, page: Int!): SeeFollowersResult!
+    seeFollowers(username: String!, page: Int!): SeeFollowersResponse!
   }
 `;

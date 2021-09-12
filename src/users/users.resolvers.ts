@@ -29,12 +29,8 @@ const resolvers: Resolvers = {
     ): PrismaPromise<number> =>
       client.user.count({ where: { followers: { some: { id } } } }),
 
-    isMe: ({ id }: User, _, { loggedInUser }: Context): boolean => {
-      if (!loggedInUser) {
-        return false;
-      }
-      return id === loggedInUser.id;
-    },
+    isMe: ({ id }: User, _, { loggedInUser }: Context): boolean =>
+      id === loggedInUser?.id,
 
     isFollowing: async (
       { id }: User,

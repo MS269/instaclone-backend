@@ -25,6 +25,9 @@ const resolvers: Resolvers = {
 
     comments: ({ id }: Photo, _, { client }: Context): PrismaPromise<number> =>
       client.comment.count({ where: { photoId: id } }),
+
+    isMine: ({ userId }: Photo, _, { loggedInUser }: Context): boolean =>
+      userId === loggedInUser?.id,
   },
 
   Hashtag: {

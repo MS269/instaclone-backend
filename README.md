@@ -37,7 +37,7 @@ Instaclone Backend - GraphQL Server (Express + Apollo Server + Prisma)
 
 ## Refactor
 
-- [ ] Mutation Responses
+- [x] Mutation Responses
 
 ## Extras
 

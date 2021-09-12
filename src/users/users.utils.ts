@@ -32,8 +32,12 @@ export const protectedResolver =
     args: any,
     context: Context,
     info: any
-  ): Resolver | ProtectedResolverResponse => {
+  ): Resolver | ProtectedResolverResponse | undefined => {
     if (!context.loggedInUser) {
+      const query = info.operaiton.operation === "query";
+      if (query) {
+        return undefined;
+      }
       return {
         ok: false,
         error: "Please log in to perform this action.",

@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import { createWriteStream } from "fs";
+import { uploadToS3 } from "../../shared/shared.utils";
 import { Context, MutationResponse, Resolvers } from "../../types";
 import { protectedResolver } from "../users.utils";
 import { EditProfileArgs } from "./editProfile";
@@ -28,14 +28,15 @@ const resolvers: Resolvers = {
         }
         let avatarUrl = null;
         if (avatar) {
-          const { filename, createReadStream } = avatar;
-          const newFilename = `${loggedInUser.id}-${Date.now()}-${filename}`;
-          const readStream = createReadStream();
-          const writeStream = createWriteStream(
-            process.cwd() + "/uploads/" + newFilename
-          );
-          readStream.pipe(writeStream);
-          avatarUrl = `http://localhost:${PORT}/static/${newFilename}`;
+          avatarUrl = await uploadToS3(avatar, loggedInUser.id, "avatars");
+          // const { filename, createReadStream } = avatar;
+          // const newFilename = `${loggedInUser.id}-${Date.now()}-${filename}`;
+          // const readStream = createReadStream();
+          // const writeStream = createWriteStream(
+          //   process.cwd() + "/uploads/" + newFilename
+          // );
+          // readStream.pipe(writeStream);
+          // avatarUrl = `http://localhost:${PORT}/static/${newFilename}`;
         }
         const updatedUser = await client.user.update({
           where: { id: loggedInUser.id },

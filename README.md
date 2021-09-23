@@ -41,4 +41,13 @@ Instaclone Backend - GraphQL Server (Express + Apollo Server + Prisma)
 
 ## Extras
 
-- [ ] S3 Image Upload
+- [x] S3 Image Upload
+
+## DMs
+
+- [ ] See Rooms
+- [ ] Send Message (Create Room)
+- [ ] See Room
+- [ ] Computed Fields
+- [ ] See (Read) Message
+- [ ] Realtime Messages

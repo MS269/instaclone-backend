@@ -45,7 +45,7 @@ Instaclone Backend - GraphQL Server (Express + Apollo Server + Prisma)
 
 ## DMs
 
-- [ ] See Rooms
+- [x] See Rooms
 - [ ] Send Message (Create Room)
 - [ ] See Room
 - [ ] Computed Fields

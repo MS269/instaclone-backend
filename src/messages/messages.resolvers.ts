@@ -1,4 +1,4 @@
-import { Message, PrismaPromise, Room, User } from ".prisma/client";
+import { Message, Prisma, PrismaPromise, Room, User } from ".prisma/client";
 import { Context, Resolvers } from "../types";
 
 const resolvers: Resolvers = {
@@ -27,6 +27,15 @@ const resolvers: Resolvers = {
         },
       });
     },
+  },
+
+  Message: {
+    user: (
+      { id }: Message,
+      _,
+      { client }: Context
+    ): Prisma.Prisma__UserClient<User | null> =>
+      client.message.findUnique({ where: { id } }).user(),
   },
 };
 

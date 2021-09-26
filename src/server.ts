@@ -19,6 +19,11 @@ const startServer = async () => {
 
   const httpServer = createServer(app);
 
+  const subscriptionServer = SubscriptionServer.create(
+    { schema, execute, subscribe },
+    { server: httpServer }
+  );
+
   const server = new ApolloServer({
     schema,
     plugins: [
@@ -42,20 +47,16 @@ const startServer = async () => {
     },
   });
 
-  const subscriptionServer = SubscriptionServer.create(
-    { schema, execute, subscribe },
-    { server: httpServer, path: server.graphqlPath }
-  );
-
   await server.start();
+
   app.use(graphqlUploadExpress());
   app.use(logger("dev"));
-  app.use("/static", express.static("uploads"));
   server.applyMiddleware({ app });
+  app.use("/static", express.static("uploads"));
 
   httpServer.listen(PORT, () =>
     console.log(
-      `Server is running on http://localhost:${PORT}${server.graphqlPath}`
+      `🚀 Server is running on http://localhost:${PORT}${server.graphqlPath}`
     )
   );
 };

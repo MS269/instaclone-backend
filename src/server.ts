@@ -3,8 +3,10 @@ dotenv.config();
 
 import { ApolloServer } from "apollo-server-express";
 import express from "express";
+import { execute, subscribe } from "graphql";
 import { graphqlUploadExpress } from "graphql-upload";
-import http from "http";
+import { createServer } from "http";
+import { SubscriptionServer } from "subscriptions-transport-ws";
 import logger from "morgan";
 import client from "./client";
 import schema from "./schema";
@@ -13,26 +15,48 @@ import { getUser } from "./users/users.utils";
 const PORT: string | number = process.env.PORT || 4000;
 
 const startServer = async () => {
+  const app = express();
+
+  const httpServer = createServer(app);
+
   const server = new ApolloServer({
     schema,
+    plugins: [
+      {
+        async serverWillStart() {
+          return {
+            async drainServer() {
+              subscriptionServer.close();
+            },
+          };
+        },
+      },
+    ],
     context: async ({ req }) => {
-      return {
-        client,
-        loggedInUser: await getUser(req.headers.token),
-      };
+      if (req) {
+        return {
+          client,
+          loggedInUser: await getUser(req.headers.token),
+        };
+      }
     },
   });
-  await server.start();
 
-  const app = express();
-  app.use(logger("dev"));
+  const subscriptionServer = SubscriptionServer.create(
+    { schema, execute, subscribe },
+    { server: httpServer, path: server.graphqlPath }
+  );
+
+  await server.start();
   app.use(graphqlUploadExpress());
+  app.use(logger("dev"));
   app.use("/static", express.static("uploads"));
   server.applyMiddleware({ app });
 
-  http.createServer(app).listen(PORT);
-  console.log(
-    `🚀 Server ready at http://localhost:${PORT}${server.graphqlPath}`
+  httpServer.listen(PORT, () =>
+    console.log(
+      `Server is running on http://localhost:${PORT}${server.graphqlPath}`
+    )
   );
 };
 

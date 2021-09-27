@@ -20,7 +20,20 @@ const startServer = async () => {
   const httpServer = createServer(app);
 
   const subscriptionServer = SubscriptionServer.create(
-    { schema, execute, subscribe },
+    {
+      schema,
+      execute,
+      subscribe,
+      onConnect: async ({ token }: any) => {
+        if (!token) {
+          throw new Error("You can't listen.");
+        }
+        return {
+          client,
+          loggedInUser: await getUser(token),
+        };
+      },
+    },
     { server: httpServer }
   );
 
@@ -38,12 +51,10 @@ const startServer = async () => {
       },
     ],
     context: async ({ req }) => {
-      if (req) {
-        return {
-          client,
-          loggedInUser: await getUser(req.headers.token),
-        };
-      }
+      return {
+        client,
+        loggedInUser: await getUser(req.headers.token),
+      };
     },
   });
 

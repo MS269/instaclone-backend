@@ -11,8 +11,7 @@ import logger from "morgan";
 import client from "./client";
 import schema from "./schema";
 import { getUser } from "./users/users.utils";
-
-const PORT: string | number = process.env.PORT || 4000;
+import { PORT } from "./constants";
 
 const startServer = async () => {
   const app = express();

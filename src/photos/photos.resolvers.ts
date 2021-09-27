@@ -1,8 +1,7 @@
 import { Hashtag, Photo, Prisma, PrismaPromise, User } from "@prisma/client";
+import { TAKE } from "../constants";
 import { Context, Resolvers } from "../types";
 import { HashtagPhotosArgs } from "./photos";
-
-const TAKE = 5;
 
 const resolvers: Resolvers = {
   Photo: {

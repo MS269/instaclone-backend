@@ -4,8 +4,6 @@ import { Context, MutationResponse, Resolvers } from "../../types";
 import { protectedResolver } from "../users.utils";
 import { EditProfileArgs } from "./editProfile";
 
-// const PORT: string | number = process.env.PORT || 4000;
-
 const resolvers: Resolvers = {
   Mutation: {
     editProfile: protectedResolver(

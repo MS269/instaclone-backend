@@ -1,8 +1,7 @@
 import { Photo, PrismaPromise, User } from "@prisma/client";
+import { TAKE } from "../constants";
 import { Context, Resolvers } from "../types";
 import { UserPhotosArgs } from "./users";
-
-const TAKE = 5;
 
 const resolvers: Resolvers = {
   User: {

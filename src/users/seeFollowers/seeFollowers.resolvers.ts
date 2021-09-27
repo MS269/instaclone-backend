@@ -1,7 +1,6 @@
+import { TAKE } from "../../constants";
 import { Context, Resolvers } from "../../types";
 import { SeeFollowersArgs, SeeFollowersResponse } from "./seeFollowers";
-
-const TAKE = 5;
 
 const resolvers: Resolvers = {
   Query: {

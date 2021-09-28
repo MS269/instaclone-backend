@@ -1,6 +1,4 @@
-import dotenv from "dotenv";
-dotenv.config();
-
+import "dotenv/config";
 import { ApolloServer } from "apollo-server-express";
 import express from "express";
 import { execute, subscribe } from "graphql";

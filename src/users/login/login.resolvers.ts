@@ -10,7 +10,7 @@ const resolvers: Resolvers = {
       { username, password }: LoginArgs,
       { client }: Context
     ): Promise<LoginResponse> => {
-      const user = await client.user.findFirst({
+      const user = await client.user.findUnique({
         where: { username },
         select: { id: true, password: true },
       });

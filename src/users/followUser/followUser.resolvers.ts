@@ -10,7 +10,7 @@ const resolvers: Resolvers = {
         { username }: FollowUserArgs,
         { client, loggedInUser }: Context
       ): Promise<MutationResponse> => {
-        const ok = await client.user.findFirst({
+        const ok = await client.user.findUnique({
           where: { username },
           select: { id: true },
         });

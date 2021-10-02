@@ -8,7 +8,7 @@ const resolvers: Resolvers = {
       { username, lastId }: SeeFollowingArgs,
       { client }: Context
     ): Promise<SeeFollowingResponse> => {
-      const ok = await client.user.findFirst({
+      const ok = await client.user.findUnique({
         where: { username },
         select: { id: true },
       });

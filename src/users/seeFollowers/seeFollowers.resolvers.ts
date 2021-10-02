@@ -9,7 +9,7 @@ const resolvers: Resolvers = {
       { username, page }: SeeFollowersArgs,
       { client }: Context
     ): Promise<SeeFollowersResponse> => {
-      const ok = await client.user.findFirst({
+      const ok = await client.user.findUnique({
         where: { username },
         select: { id: true },
       });

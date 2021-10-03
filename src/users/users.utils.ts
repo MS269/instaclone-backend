@@ -32,11 +32,11 @@ export const protectedResolver =
     args: any,
     context: Context,
     info: any
-  ): Resolver | ProtectedResolverResponse | undefined => {
+  ): Resolver | ProtectedResolverResponse | null => {
     if (!context.loggedInUser) {
-      const query = info.operaiton.operation === "query";
+      const query = info.operation.operation === "query";
       if (query) {
-        return undefined;
+        return null;
       }
       return {
         ok: false,

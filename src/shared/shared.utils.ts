@@ -1,4 +1,5 @@
 import AWS from "aws-sdk";
+import { FileUpload } from "graphql-upload";
 
 AWS.config.update({
   credentials: {
@@ -8,7 +9,7 @@ AWS.config.update({
 });
 
 export const uploadToS3 = async (
-  file: any,
+  file: FileUpload,
   userId: number,
   folderName: string
 ): Promise<string> => {
@@ -17,7 +18,7 @@ export const uploadToS3 = async (
   const readStream = createReadStream();
   const { Location } = await new AWS.S3()
     .upload({
-      Bucket: "Instaclone-uploads-ms269",
+      Bucket: "instaclone-uploads-ms269",
       Key: objectName,
       ACL: "public-read",
       Body: readStream,

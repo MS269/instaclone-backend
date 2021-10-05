@@ -1,4 +1,6 @@
+import { FileUpload } from "graphql-upload";
+
 export interface UploadPhotoArgs {
-  file: string;
+  file: FileUpload;
   caption?: string;
 }

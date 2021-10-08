@@ -27,6 +27,24 @@ const resolvers: Resolvers = {
 
     isMine: ({ userId }: Photo, _, { loggedInUser }: Context): boolean =>
       userId === loggedInUser?.id,
+
+    isLiked: async (
+      { id }: Photo,
+      _,
+      { client, loggedInUser }: Context
+    ): Promise<boolean> => {
+      if (!loggedInUser) {
+        return false;
+      }
+      const ok = await client.like.findUnique({
+        where: { photoId_userId: { photoId: id, userId: loggedInUser.id } },
+        select: { id: true },
+      });
+      if (!ok) {
+        return false;
+      }
+      return true;
+    },
   },
 
   Hashtag: {

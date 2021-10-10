@@ -1,4 +1,11 @@
-import { Hashtag, Photo, Prisma, PrismaPromise, User } from "@prisma/client";
+import {
+  Comment,
+  Hashtag,
+  Photo,
+  Prisma,
+  PrismaPromise,
+  User,
+} from "@prisma/client";
 import { TAKE } from "../constants";
 import { Context, Resolvers } from "../types";
 import { HashtagPhotosArgs } from "./photos";
@@ -22,7 +29,21 @@ const resolvers: Resolvers = {
     likes: ({ id }: Photo, _, { client }: Context): PrismaPromise<number> =>
       client.like.count({ where: { photoId: id } }),
 
-    comments: ({ id }: Photo, _, { client }: Context): PrismaPromise<number> =>
+    comments: (
+      { id }: Photo,
+      _,
+      { client }: Context
+    ): PrismaPromise<(Comment & { user: User })[]> =>
+      client.comment.findMany({
+        where: { photoId: id },
+        include: { user: true },
+      }),
+
+    commentNumber: (
+      { id }: Photo,
+      _,
+      { client }: Context
+    ): PrismaPromise<number> =>
       client.comment.count({ where: { photoId: id } }),
 
     isMine: ({ userId }: Photo, _, { loggedInUser }: Context): boolean =>

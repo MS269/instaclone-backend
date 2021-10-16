@@ -17,5 +17,6 @@ export interface Resolvers {
 
 export interface MutationResponse {
   ok: boolean;
+  id?: number;
   error?: string;
 }

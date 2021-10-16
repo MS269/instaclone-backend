@@ -17,14 +17,14 @@ const resolvers: Resolvers = {
         if (!ok) {
           return { ok: false, error: "Photo not found." };
         }
-        await client.comment.create({
+        const newComment = await client.comment.create({
           data: {
             payload,
             photo: { connect: { id: photoId } },
             user: { connect: { id: loggedInUser.id } },
           },
         });
-        return { ok: true };
+        return { ok: true, id: newComment.id };
       }
     ),
   },
